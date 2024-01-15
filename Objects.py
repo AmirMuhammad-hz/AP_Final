@@ -22,8 +22,7 @@ class User:
 
 
 class Clinic:
-    def init(self, name: str, address: str, contact: str, availability: bool, capacity: int,
-             services: list, id: int = None):
+    def init(self, name: str, address: str, contact: str, availability: bool, capacity: int, id: int = None):
         self.id = id
         self.name = name
         self.address = address
