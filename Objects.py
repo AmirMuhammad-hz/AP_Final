@@ -1,114 +1,109 @@
+import datetime
+
+
 class User:
-    def __init__(self, id, name, email, password, user_type):
+    def init(self, name: str, email: str, password: str, id: int = None):
         self.id = id
         self.name = name
         self.email = email
         self.password = password
-        self.user_type = user_type
 
-    def register(self):
-        pass
+    def sign_in(self):
+        print("User registered")
 
-    def login(self):
-        pass
+    def log_out(self):
+        print("User logged in")
 
     def update_profile(self):
-        pass
+        print("User profile updated")
 
     def view_appointments(self):
-        pass
+        print("User appointments:")
 
 
 class Clinic:
-    def __init__(self, id, name, address, contact, services, availability):
+    def init(self, name: str, address: str, contact: str, availability: bool, capacity: int,
+             services: list, id: int = None):
         self.id = id
         self.name = name
         self.address = address
         self.contact = contact
-        self.services = services
         self.availability = availability
+        self.capacity = capacity
 
     def add_clinic(self):
-        pass
+        print("Clinic added")
 
     def update_clinic_info(self):
-        pass
+        print("Clinic info updated")
 
     def set_availability(self):
-        pass
+        print("Clinic availability set")
 
     def view_appointments(self):
-        pass
+        print("Clinic appointments:")
 
 
 class Doctor:
-    def __init__(self, id, name, clinic, specialization):
+    def init(self, name: str, specialization: str, id: int = None):
         self.id = id
         self.name = name
-        self.clinic = clinic
         self.specialization = specialization
 
     def add_doctor(self):
-        pass
+        print("Doctor added")
 
     def update_doctor_info(self):
-        pass
+        print("Doctor info updated")
 
     def view_appointments(self):
-        pass
+        print("Doctor appointments:")
 
 
 class Appointment:
-    def __init__(self, id, clinic_id, patient_id, date_time, status):
+    def init(self, clinic: Clinic, user: User, doctor: Doctor, date_time: datetime.datetime, status: int,
+             id: int = None):
         self.id = id
-        self.clinic_id = clinic_id
-        self.patient_id = patient_id
+        self.clinic = clinic
+        self.user = user
+        self.doctor = doctor
         self.date_time = date_time
         self.status = status
 
     def book_appointment(self):
-        pass
+        print("Appointment booked")
 
     def cancel_appointment(self):
-        pass
+        print("Appointment cancelled")
 
     def reschedule_appointment(self):
-        pass
+        print("Appointment rescheduled")
 
 
 class Notification:
-    def __init__(self, id, user_id, message, date_time):
+    def init(self, user: User, message: str, date_time: datetime.datetime, id: int = None):
         self.id = id
-        self.user_id = user_id
+        self.user = user
         self.message = message
         self.date_time = date_time
 
     def send_notification(self):
-        pass
+        print("Notification sent")
 
 
 class Admin:
-    def __init__(self, id, name, email, password):
+    def init(self, name: str, email: str, password: str, clinic: Clinic, id: int = None):
         self.id = id
         self.name = name
         self.email = email
         self.password = password
+        self.clinic = clinic
 
     def add_user(self):
-        pass
+        print("User added by admin")
 
     def add_clinic(self):
-        pass
+        print("Clinic added by admin")
 
     def add_doctor(self):
-        pass
-
-
-class System:
-    def __init__(self):
-        self.users = []
-        self.clinics = []
-        self.doctors = []
-        self.appointments = []
-        self.notifications = []
-
+        print("Doctor added by admin")
