@@ -9,9 +9,15 @@ class User:
         self.email = email
         self.password = password
         self.log_in = False
+        self.tmp_password = None
 
     def sign_in(self):
-        sql = f"SELECT * FROM user WHERE hashed_password = '{hashlib.sha256(self.password)}' and email ='{self.email}' "
+        if self.tmp_password is None:
+            sql = f"SELECT * FROM user WHERE hashed_password = '{hashlib.sha256(self.password)}' " \
+                  f"and email ='{self.email}'"
+        else:
+            sql = f"SELECT * FROM user WHERE hashed_password = '{hashlib.sha256(self.tmp_password)}' " \
+                  f"and email ='{self.email}'"
 
     def log_out(self):
         if self.log_in:
