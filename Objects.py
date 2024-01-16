@@ -2,7 +2,7 @@ import datetime
 
 
 class User:
-    def init(self, name: str, email: str, password: str, id: int = None):
+    def __init__(self, name: str, email: str, password: str, id: int = None):
         self.id = id
         self.name = name
         self.email = email
@@ -22,7 +22,7 @@ class User:
 
 
 class Clinic:
-    def init(self, name: str, address: str, contact: str, availability: bool, capacity: int, id: int = None):
+    def __init__(self, name: str, address: str, contact: str, availability: bool, capacity: int, id: int = None):
         self.id = id
         self.name = name
         self.address = address
@@ -44,7 +44,7 @@ class Clinic:
 
 
 class Doctor:
-    def init(self, name: str, specialization: str, id: int = None):
+    def __init__(self, name: str, specialization: str, id: int = None):
         self.id = id
         self.name = name
         self.specialization = specialization
@@ -60,7 +60,7 @@ class Doctor:
 
 
 class Appointment:
-    def init(self, clinic: Clinic, user: User, doctor: Doctor, date_time: datetime.datetime, status: int,
+    def __init__(self, clinic: Clinic, user: User, doctor: Doctor, date_time: datetime.datetime, status: int,
              id: int = None):
         self.id = id
         self.clinic = clinic
@@ -80,7 +80,7 @@ class Appointment:
 
 
 class Notification:
-    def init(self, user: User, message: str, date_time: datetime.datetime, id: int = None):
+    def __init__(self, user: User, message: str, date_time: datetime.datetime, id: int = None):
         self.id = id
         self.user = user
         self.message = message
@@ -91,7 +91,7 @@ class Notification:
 
 
 class Admin:
-    def init(self, name: str, email: str, password: str, clinic: Clinic, id: int = None):
+    def __init__(self, name: str, email: str, password: str, clinic: Clinic, id: int = None):
         self.id = id
         self.name = name
         self.email = email
