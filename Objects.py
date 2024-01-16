@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 
 
 class User:
@@ -7,18 +8,20 @@ class User:
         self.name = name
         self.email = email
         self.password = password
+        self.log_in = False
 
     def sign_in(self):
-        print("User registered")
+        sql = f"SELECT * FROM user WHERE hashed_password = '{hashlib.sha256(self.password)}' and email ='{self.email}' "
 
     def log_out(self):
-        print("User logged in")
+        if self.log_in:
+            self.log_in = False
 
     def update_profile(self):
         print("User profile updated")
 
     def view_appointments(self):
-        print("User appointments:")
+        sql = f"SELECT * FROM appointment INNER JOIN user WHERE user.email = '{self.email}'"
 
 
 class Clinic:
@@ -50,18 +53,19 @@ class Doctor:
         self.specialization = specialization
 
     def add_doctor(self):
-        print("Doctor added")
+        sql = ''
 
     def update_doctor_info(self):
         print("Doctor info updated")
 
     def view_appointments(self):
-        print("Doctor appointments:")
+        sql = f"SELECT * FROM appointment INNER JOIN doctor WHERE doctor.name = '{self.name}' " \
+              f"and doctor.specialization = '{self.specialization}'"
 
 
 class Appointment:
     def __init__(self, clinic: Clinic, user: User, doctor: Doctor, date_time: datetime.datetime, status: int,
-             id: int = None):
+                 id: int = None):
         self.id = id
         self.clinic = clinic
         self.user = user
