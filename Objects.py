@@ -1,5 +1,10 @@
 import datetime
 import hashlib
+import requests
+import json
+
+reserve_url = "https://localhost/reserve/"
+slot_url = "https://localhost/slots/"
 
 
 class User:
@@ -28,6 +33,14 @@ class User:
 
     def view_appointments(self):
         sql = f"SELECT * FROM appointment INNER JOIN user WHERE user.email = '{self.email}'"
+
+    def get_slot(self):
+        slots = requests.get(slot_url).json()
+        slots = json.loads(slots)[0]
+        print(slots)
+
+    def set_slot(self, id, resrved):
+        requests.post(reserve_url, data=json.dumps({'id': id, 'reserved': resrved}))
 
 
 class Clinic:
@@ -116,3 +129,14 @@ class Admin:
 
     def add_doctor(self):
         print("Doctor added by admin")
+
+    def change_capacity(self, id, capacity):
+        requests.post(reserve_url, data=json.dumps({'id': id, 'reserved': -capacity}))
+
+    def get_slot(self):
+        slots = requests.get(slot_url).json()
+        slots = json.loads(slots)[0]
+        print(slots)
+
+    def delete_appointment(self):
+        pass
