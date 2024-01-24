@@ -66,9 +66,34 @@ class User:
     def set_slot(self, id, resrved):
         requests.post(reserve_url, data=json.dumps({'id': id, 'reserved': resrved}))
 
+    def search(self, keyword):
+        # Create an empty list to store the results
+        results = []
+        # Connect to the database
+        mydb = mysql.connector.connect(
+            host=db_server,
+            user=db_user,
+            password=db_password,
+            database=database
+        )
+        cursor = mydb.cursor()
+        # Create a SQL query to select the name and id of the doctors or clinics that match the keyword
+        sql = f"SELECT name, id FROM doctor WHERE name LIKE '%{keyword}%' UNION SELECT name, id FROM clinic WHERE name LIKE '%{keyword}%'"
+        # Execute the query
+        cursor.execute(sql)
+        # Fetch all the results
+        rows = cursor.fetchall()
+        # Loop through the rows and append them to the results list
+        for row in rows:
+            results.append(row)
+        # Close the database connection
+        mydb.close()
+        # Return the results list
+        return results
+
 
 class Clinic:
-    def __init__(self, name: str, address: str, contact: str, availability: bool, capacity: int, id: int = None):
+    def __init__(self, name: str, address: str, contact: str, availability: bool = None, capacity: int = None, id: int = None):
         self.id = id
         self.name = name
         self.address = address
@@ -225,3 +250,21 @@ class Admin:
         slots = requests.get(slot_url).json()
         slots = json.loads(slots)[0]
         print(slots)
+
+    def log_out(self):
+        pass
+
+    def sign_in(self):
+        if self.tmp_password is None:
+            sql = f"SELECT * FROM user WHERE hashed_password = '{hashlib.sha256(self.password)}' " \
+                  f"and email ='{self.email}'"
+        else:
+            sql = f"SELECT * FROM user WHERE hashed_password = '{hashlib.sha256(self.tmp_password)}' " \
+                  f"and email ='{self.email}'"
+        cursor.execute(sql)
+        res = cursor.fetchone()
+        if res.values() is None:
+            print("Wrong email or password")
+        else:
+            self.log_in = True
+            print('Wellcome')
