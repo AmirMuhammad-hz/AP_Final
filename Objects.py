@@ -2,9 +2,21 @@ import datetime
 import hashlib
 import requests
 import json
+import mysql.connector
 
 reserve_url = "https://localhost/reserve/"
 slot_url = "https://localhost/slots/"
+db_server = ''
+db_user = ''
+db_password = ''
+database = ''
+mydb = mysql.connector.connect(
+    host=db_server,
+    user=db_user,
+    password=db_password,
+    database=database
+)
+cursor = mydb.cursor()
 
 
 class User:
@@ -23,16 +35,30 @@ class User:
         else:
             sql = f"SELECT * FROM user WHERE hashed_password = '{hashlib.sha256(self.tmp_password)}' " \
                   f"and email ='{self.email}'"
+        cursor.execute(sql)
+        res = cursor.fetchone()
+        if res.values() is None:
+            print("Wrong email or password")
+        else:
+            self.log_in = True
+            print('Wellcome')
+
 
     def log_out(self):
         if self.log_in:
             self.log_in = False
 
-    def update_profile(self):
-        print("User profile updated")
-
     def view_appointments(self):
-        sql = f"SELECT * FROM appointment INNER JOIN user WHERE user.email = '{self.email}'"
+        sql = f"SELECT doctor.name, clinic.name, appointmnet.datetime " \
+              f"FROM appointment INNER JOIN user ON userid = fk_user" \
+              f"INNER JOIN doctor ON dooctorid = fk_doctor" \
+              f"INNER JOIN clinic ON clinicid = fk_clinic " \
+              f"WHERE user.email = '{self.email}'"
+        cursor.execute(sql)
+        res = cursor.fetchall()
+        for record in res:
+            print(record)
+
 
     def get_slot(self):
         slots = requests.get(slot_url).json()
