@@ -1,6 +1,6 @@
 # myapp/urls.py
 from django.urls import path
-from .views import (
+from ap_final.Clinic_reservation_app.views import (
     user_sign_in, user_sign_up, user_search, user_book_appointment,
     user_view_last_reservation, user_view_current_reservations, user_cancel_reservation,
     secretary_sign_in, secretary_sign_up, secretary_view_current_reservations,

@@ -1,4 +1,4 @@
-
+from django.db import models
 
 from django.db import models
 
@@ -65,3 +65,4 @@ class Admin(models.Model):
 
     def __str__(self):
         return self.name
+
